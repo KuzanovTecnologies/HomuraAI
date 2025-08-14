@@ -1,0 +1,57 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+import os
+import sys
+import logging
+from dotenv import load_dotenv
+from openai import OpenAI
+import discord
+from discord.ext import commands
+
+# ========== CONFIGURAÇÃO DE LOG ===========
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("homura-sec")
+
+# ========== CARREGAR .env ===========
+load_dotenv()
+
+DISCORD_TOKEN = os.getenv("DISCORD_BOT_TOKEN")
+OPENAI_KEY = os.getenv("OPENAI_API_KEY")
+
+# ========== VERIFICAÇÃO DE TOKENS ============
+if not DISCORD_TOKEN or not OPENAI_KEY:
+    sys.stderr.write(
+    "\n[Homura] ...Hmph. Você esqueceu de configurar as chaves.\n"
+    "Verifique se o arquivo `.env` existe no mesmo diretório e contém:\n"
+    "DISCORD_BOT_TOKEN=your_token_here\n"
+    "OPENAI_API_KEY=your_key_here\n\n"
+    )
+    sys.exit(1)
+
+# ========== CLIENTE OPENAI ==========
+client = OpenAI(api_key=OPENAI_KEY)
+
+# ========== CONFIG DISCORD BOT ==========
+intents = discord.Intents.default()
+intents.message_content = True
+
+bot = commands.Bot(command_prefix="!", intents=intents, help_command=None)
+
+@bot.event
+async def on_ready():
+    logger.info(f"Homura-Sec conectada como {bot.user} (id: {1404282537077112974})")
+
+@bot.command(name="ping", help="Verifica se o bot está online")
+async def ping(ctx):
+    await ctx.reply("Homura-Sec está ativa e ouvindo...")
+
+# =========== EXECUÇÃO ============
+try:
+    bot.run(DISCORD_TOKEN)
+except discord.LoginFailure:
+    sys.stderr.write(
+        "\n[Homura] ...Tsk. O token do Discord é invalido.\n"
+        "Reset no Discord Developer Portal e atualize seu `.env`.\n\n"
+    )
+    sys.exit(1)
