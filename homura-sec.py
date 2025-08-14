@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
+# -- coding: utf-8 --
 import os
 import sys
 import logging
@@ -23,7 +22,7 @@ OPENAI_KEY = os.getenv("OPENAI_API_KEY")
 if not DISCORD_TOKEN or not OPENAI_KEY:
     sys.stderr.write(
     "\n[Homura] ...Hmph. Você esqueceu de configurar as chaves.\n"
-    "Verifique se o arquivo `.env` existe no mesmo diretório e contém:\n"
+    "Verifique se o arquivo .env existe no mesmo diretório e contém:\n"
     "DISCORD_BOT_TOKEN=your_token_here\n"
     "OPENAI_API_KEY=your_key_here\n\n"
     )
@@ -40,11 +39,30 @@ bot = commands.Bot(command_prefix="!", intents=intents, help_command=None)
 
 @bot.event
 async def on_ready():
-    logger.info(f"Homura-Sec conectada como {bot.user} (id: {1404282537077112974})")
+    logger.info(f"Homura-Sec conectada como {bot.user} (id: {bot.user.id})")
 
 @bot.command(name="ping", help="Verifica se o bot está online")
 async def ping(ctx):
     await ctx.reply("Homura-Sec está ativa e ouvindo...")
+
+# ========== NOVO COMANDO PARA CHAT ==========
+@bot.command(name="ask", help="Envia uma pergunta para o modelo OpenAI")
+async def ask(ctx, *, pergunta: str):
+    await ctx.trigger_typing()
+    try:
+        resposta = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "system", "content": "Você é um assistente útil e conciso."},
+                {"role": "user", "content": pergunta}
+            ],
+            max_tokens=500
+        )
+        texto_resposta = resposta.choices[0].message.content.strip()
+        await ctx.reply(texto_resposta)
+    except Exception as e:
+        logger.error(f"Erro ao chamar OpenAI: {e}")
+        await ctx.reply("Houve um problema ao processar sua solicitação.")
 
 # =========== EXECUÇÃO ============
 try:
@@ -52,6 +70,6 @@ try:
 except discord.LoginFailure:
     sys.stderr.write(
         "\n[Homura] ...Tsk. O token do Discord é invalido.\n"
-        "Reset no Discord Developer Portal e atualize seu `.env`.\n\n"
+        "Reset no Discord Developer Portal e atualize seu .env.\n\n"
     )
     sys.exit(1)
