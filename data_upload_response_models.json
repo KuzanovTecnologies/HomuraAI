@@ -1,0 +1,11 @@
+{
+  "object": "file",
+  "id": "file-CwHg45Fo7YXwkWRPUkLNHW",
+  "purpose": "evals",
+  "filename": "tickets.jsonl",
+  "bytes": 200,
+  "created_at": 1742834798,
+  "expired_at": null,
+  "status": "processed",
+  "status_details": null
+}
