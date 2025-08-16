@@ -45,8 +45,20 @@ async def on_ready():
 async def ping(ctx):
     await ctx.reply("Homura-Sec está ativa e ouvindo...")
 
+@bot.command(name="ask", help="Envia uma mensagem")
+async def answer(ctx):
+    await ctx.reply("fala um tópico sobre cibersegurança e tempo... cibersegurança é boa para quem gosta, qual é o melhor tempo para agora? agora são 20:36 da noite...")
+
+@bot.command(name="ask a message", help="Envia uma mensagem")
+async def answer(ctx):
+    await ctx.reply("fala um tópico sobre cibersegurança e programação... cibersegurança é muito bom, não acha? e qual seria o seu verdadeiro interesse nisso? programação é boa desde que você curta esse tipo de coisa.")
+
+@bot.command(name="whoami", help="Diga seu nome")
+async def answer(ctx):
+    await ctx.reply("Eu sou HomuraAI, Essa é quem realmente sou... então, e aí? vamos á o que interessa, gosto de cibersegurança e programação, e quanto a você?")
+
 # ========== NOVO COMANDO PARA CHAT ==========
-@bot.command(name="ask", help="Envia uma pergunta para o modelo OpenAI")
+@bot.command(name="send questions", help="Envia uma pergunta para o modelo OpenAI")
 async def ask(ctx, *, pergunta: str):
     await ctx.trigger_typing()
     try:
