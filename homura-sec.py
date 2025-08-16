@@ -57,6 +57,14 @@ async def answer(ctx):
 async def answer(ctx):
     await ctx.reply("Eu sou HomuraAI, Essa é quem realmente sou... então, e aí? vamos á o que interessa, gosto de cibersegurança e programação, e quanto a você?")
 
+@bot.command(name="clear40messages", help="Clear the messages that are not working or the ones that are not needed")
+async def answer(ctx):
+    await ctx.reply("Mensagens inuteis, vão ser limpas, limpando mensagens inutilizadas...")
+
+@bot.command(name="writeatopicaboutcybersecurity", help="escreva um tópico sobre cibersegurança...")
+async def answer(ctx):
+    await ctx.reply("um bom caminho para cibersegurança é ser um hacker de chapéu branco, não se juntar aos anônimos, não seja um hacker de chapéu preto, seja um hacker de chapéu branco...")
+
 # ========== NOVO COMANDO PARA CHAT ==========
 @bot.command(name="send questions", help="Envia uma pergunta para o modelo OpenAI")
 async def ask(ctx, *, pergunta: str):
