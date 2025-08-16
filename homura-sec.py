@@ -65,6 +65,10 @@ async def answer(ctx):
 async def answer(ctx):
     await ctx.reply("um bom caminho para cibersegurança é ser um hacker de chapéu branco, não se juntar aos anônimos, não seja um hacker de chapéu preto, seja um hacker de chapéu branco...")
 
+@bot.command(name="sayhello", help="diga oi...")
+async def answer(ctx):
+    await ctx.reply("oi, e aí? tudo bem?")
+
 # ========== NOVO COMANDO PARA CHAT ==========
 @bot.command(name="send questions", help="Envia uma pergunta para o modelo OpenAI")
 async def ask(ctx, *, pergunta: str):
