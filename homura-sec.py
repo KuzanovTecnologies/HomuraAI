@@ -37,6 +37,8 @@ intents.message_content = True
 
 bot = commands.Bot(command_prefix="!", intents=intents, help_command=None)
 
+# ========== COMANDOS DE HOMURAAI ==========
+
 @bot.event
 async def on_ready():
     logger.info(f"Homura-Sec conectada como {bot.user} (id: {bot.user.id})")
@@ -69,6 +71,16 @@ async def answer(ctx):
 async def answer(ctx):
     await ctx.reply("oi, e aí? tudo bem?")
 
+# ========= GERENCIADOR DE VULNERABILIDADES POR IA =========
+@bot.command(name="checkforpotentialvulnerabilities", help="verificar por potenciais vulnerabilidades")
+async def answer(ctx):
+    await ctx.reply("ativar sistemas para verificação de potenciais vulnerabilidades")
+
+# ======== PESQUISAR POR HISTÓRICO DE ALVOS POR IA =========
+@bot.command(name="searchtargetshistorybyai", help="pesquisar por histórico de alvos por ia")
+async def answer(ctx):
+    await ctx.reply("pesquisar histórico de usuários alvo por inteligência artificial")
+
 # ========== NOVO COMANDO PARA CHAT ==========
 @bot.command(name="send questions", help="Envia uma pergunta para o modelo OpenAI")
 async def ask(ctx, *, pergunta: str):
@@ -88,6 +100,7 @@ async def ask(ctx, *, pergunta: str):
         logger.error(f"Erro ao chamar OpenAI: {e}")
         await ctx.reply("Houve um problema ao processar sua solicitação.")
 
+# ========== OUTRO COMANDO PARA CHAT ===========
 
 @bot.command(name="write prompts", help="Escreve um prompt para o Modelo OpenAI")
 async def write(ctx, *, escreva: str):
