@@ -80,7 +80,26 @@ async def ask(ctx, *, pergunta: str):
                 {"role": "system", "content": "Você é um assistente útil e conciso."},
                 {"role": "user", "content": pergunta}
             ],
-            max_tokens=500
+            max_tokens=1000
+        )
+        texto_resposta = resposta.choices[0].message.content.strip()
+        await ctx.reply(texto_resposta)
+    except Exception as e:
+        logger.error(f"Erro ao chamar OpenAI: {e}")
+        await ctx.reply("Houve um problema ao processar sua solicitação.")
+
+
+@bot.command(name="write prompts", help="Escreve um prompt para o Modelo OpenAI")
+async def write(ctx, *, escreva: str):
+    await ctx.trigger_typing()
+    try:
+        resposta = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "system", "content": "Você é um agente de cibersegurança, preciso e defensivo."},
+                {"role": "user", "content": pergunta}
+           ],
+           max_tokens=1000
         )
         texto_resposta = resposta.choices[0].message.content.strip()
         await ctx.reply(texto_resposta)
