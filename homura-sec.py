@@ -120,6 +120,25 @@ async def write(ctx, *, escreva: str):
         logger.error(f"Erro ao chamar OpenAI: {e}")
         await ctx.reply("Houve um problema ao processar sua solicitação.")
 
+# =========== SISTEMA DE CONVERSÃO DE BANCO DE DADOS POR CHATS DOS USUÁRIOS =========
+
+@bot.command(name="Message receiver systems", help="Recebe mensagens de usuários e as passa para o modelo OpenAI")
+async def write(ctx, *, escreva: str):
+    await ctx.trigger_typing()
+    try:
+        resposta = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+
+            ],
+            max_tokens=1000
+       )
+        texto_resposta = resposta.choices[0].message.content.strip()
+        await ctx.reply(texto_resposta)
+    except Exception as e:
+       logger.error(f"Erro ao chamar OpenAI: {e}")
+       await ctx.reply("Houve um problema ao processar sua solicitação.")
+
 # =========== EXECUÇÃO ============
 try:
     bot.run(DISCORD_TOKEN)
