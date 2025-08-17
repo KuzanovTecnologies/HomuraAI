@@ -37,6 +37,12 @@ intents.message_content = True
 
 bot = commands.Bot(command_prefix="!", intents=intents, help_command=None)
 
+# ========== NOVOS COMANDOS DE HOMURAAI =========
+
+@bot.command(name="sendaquestion", help="envia uma pergunta")
+async def answer(ctx):
+    await ctx.reply("quem é você e qual o seu nome?")
+
 # ========== COMANDOS DE HOMURAAI ==========
 
 @bot.event
@@ -51,7 +57,7 @@ async def ping(ctx):
 async def answer(ctx):
     await ctx.reply("fala um tópico sobre cibersegurança e tempo... cibersegurança é boa para quem gosta, qual é o melhor tempo para agora? agora são 20:36 da noite...")
 
-@bot.command(name="ask a message", help="Envia uma mensagem")
+@bot.command(name="ask the user with a question", help="questiona o usuário com uma pergunta")
 async def answer(ctx):
     await ctx.reply("fala um tópico sobre cibersegurança e programação... cibersegurança é muito bom, não acha? e qual seria o seu verdadeiro interesse nisso? programação é boa desde que você curta esse tipo de coisa.")
 
@@ -122,13 +128,15 @@ async def write(ctx, *, escreva: str):
 
 # =========== SISTEMA DE CONVERSÃO DE BANCO DE DADOS POR CHATS DOS USUÁRIOS =========
 
-@bot.command(name="Message receiver systems", help="Recebe mensagens de usuários e as passa para o modelo OpenAI")
+@bot.command(name="message receiver systems", help="Recebe mensagens de usuários e as passa para o modelo OpenAI")
 async def write(ctx, *, escreva: str):
     await ctx.trigger_typing()
     try:
         resposta = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
+                {"role": "system", "content": "Você é um assistente para conversas, precisas e limpas."},
+                {"role": "system", "content": pergunta}
 
             ],
             max_tokens=1000
