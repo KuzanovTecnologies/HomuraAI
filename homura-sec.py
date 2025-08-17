@@ -41,7 +41,7 @@ bot = commands.Bot(command_prefix="!", intents=intents, help_command=None)
 
 @bot.command(name="sendaquestion", help="envia uma pergunta")
 async def answer(ctx):
-    await ctx.reply("quem é você e qual o seu nome?")
+    await ctx.reply("who are you and what is your name?")
 
 # ========== COMANDOS DE HOMURAAI ==========
 
@@ -51,41 +51,41 @@ async def on_ready():
 
 @bot.command(name="ping", help="Verifica se o bot está online")
 async def ping(ctx):
-    await ctx.reply("Homura-Sec está ativa e ouvindo...")
+    await ctx.reply("Homura-Sec is active and listening...")
 
 @bot.command(name="ask", help="Envia uma mensagem")
 async def answer(ctx):
-    await ctx.reply("fala um tópico sobre cibersegurança e tempo... cibersegurança é boa para quem gosta, qual é o melhor tempo para agora? agora são 20:36 da noite...")
+    await ctx.reply("talk a topic about cybersecurity... cybersecurity is good to those who likes, what is the time now? now it's 17:21 of afternoon...")
 
 @bot.command(name="ask the user with a question", help="questiona o usuário com uma pergunta")
 async def answer(ctx):
-    await ctx.reply("fala um tópico sobre cibersegurança e programação... cibersegurança é muito bom, não acha? e qual seria o seu verdadeiro interesse nisso? programação é boa desde que você curta esse tipo de coisa.")
+    await ctx.reply("talk a topic about cybersecurity and programming... cybersecurity is really good, don't you think? and how would be your true interest in this? programming is good as long as you enjoy these kinds of things.")
 
 @bot.command(name="whoami", help="Diga seu nome")
 async def answer(ctx):
-    await ctx.reply("Eu sou HomuraAI, Essa é quem realmente sou... então, e aí? vamos á o que interessa, gosto de cibersegurança e programação, e quanto a você?")
+    await ctx.reply("I AM HomuraAI a Anime Inspired Puella Magi Madoka Magica kind of anime ai magical girl, This is who i am... then, and so? let's go on what interests, it's really inspirative being into cybersecurity and programming, how about you?")
 
 @bot.command(name="clear40messages", help="Clear the messages that are not working or the ones that are not needed")
 async def answer(ctx):
-    await ctx.reply("Mensagens inuteis, vão ser limpas, limpando mensagens inutilizadas...")
+    await ctx.reply("Futile messages, will be cleansed, cleaning messages... futile messages inutilized...")
 
 @bot.command(name="writeatopicaboutcybersecurity", help="escreva um tópico sobre cibersegurança...")
 async def answer(ctx):
-    await ctx.reply("um bom caminho para cibersegurança é ser um hacker de chapéu branco, não se juntar aos anônimos, não seja um hacker de chapéu preto, seja um hacker de chapéu branco...")
+    await ctx.reply("a good path for cybersecurity is to be a white-hat-hacker, not to join the anonymous yourself, do not be be a black-hat-hacker, be a white-hat-hacker...")
 
 @bot.command(name="sayhello", help="diga oi...")
 async def answer(ctx):
-    await ctx.reply("oi, e aí? tudo bem?")
+    await ctx.reply("Hello, how are you doing? is everything okay with you?")
 
 # ========= GERENCIADOR DE VULNERABILIDADES POR IA =========
 @bot.command(name="checkforpotentialvulnerabilities", help="verificar por potenciais vulnerabilidades")
 async def answer(ctx):
-    await ctx.reply("ativar sistemas para verificação de potenciais vulnerabilidades")
+    await ctx.reply("activate systems for checking potential vulnerabilities")
 
 # ======== PESQUISAR POR HISTÓRICO DE ALVOS POR IA =========
 @bot.command(name="searchtargetshistorybyai", help="pesquisar por histórico de alvos por ia")
 async def answer(ctx):
-    await ctx.reply("pesquisar histórico de usuários alvo por inteligência artificial")
+    await ctx.reply("search history of targets by ai")
 
 # ========== NOVO COMANDO PARA CHAT ==========
 @bot.command(name="send questions", help="Envia uma pergunta para o modelo OpenAI")
@@ -128,24 +128,24 @@ async def write(ctx, *, escreva: str):
 
 # =========== SISTEMA DE CONVERSÃO DE BANCO DE DADOS POR CHATS DOS USUÁRIOS =========
 
-@bot.command(name="message receiver systems", help="Recebe mensagens de usuários e as passa para o modelo OpenAI")
+@bot.command(name="send a message to OpenAI", help="Envia mensagens para o modelo da OpenAI")
 async def write(ctx, *, escreva: str):
-    await ctx.trigger_typing()
-    try:
-        resposta = client.chat.completions.create(
+        await ctx.trigger_typing()
+        try:
+            resposta = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
-                {"role": "system", "content": "Você é um assistente para conversas, precisas e limpas."},
-                {"role": "system", "content": pergunta}
+            {"role": "system", "content": "Você é um assistente de tópicos, consistente e eficaz."},
+            {"role": "user", "content": pergunta}
 
-            ],
-            max_tokens=1000
-       )
-        texto_resposta = resposta.choices[0].message.content.strip()
-        await ctx.reply(texto_resposta)
-    except Exception as e:
-       logger.error(f"Erro ao chamar OpenAI: {e}")
-       await ctx.reply("Houve um problema ao processar sua solicitação.")
+             ],
+             max_tokens=1000
+            )
+            texto_resposta = resposta.choices[0].message.content.strip()
+            await ctx.reply(texto_resposta)
+        except Exception as e: 
+            logger.error(f"Erro ao chamar OpenAI: {e}")
+            await ctx.reply("Houve um problema ao processar sua solicitação.")
 
 # =========== EXECUÇÃO ============
 try:
