@@ -35,7 +35,18 @@ client = OpenAI(api_key=OPENAI_KEY)
 intents = discord.Intents.default()
 intents.message_content = True
 
+# ========== NEW CONFIG FOR DISCORD BOT ===========
+intents = discord.Intents.default()
+intents.messages = True
+intents.message_content = True
+
 bot = commands.Bot(command_prefix="!", intents=intents, help_command=None)
+
+# ========== OUTROS COMANDOS DE HOMURAAI =========
+
+@bot.command(name="tts", help="converte textos para vozes")
+async def voices(ctx):
+    await ctx.reply("what do you want to do today? any opinions on what you want?")
 
 # ========== NOVOS COMANDOS DE HOMURAAI =========
 
@@ -156,3 +167,48 @@ except discord.LoginFailure:
         "Reset no Discord Developer Portal e atualize seu .env.\n\n"
     )
     sys.exit(1)
+
+# =========== EVENTOS =============
+try: 
+    bot.run(BOT_EVENTS)
+except discord.LoggingEvents:
+    sys.sysevents.write(
+        "\n[Homura] ...Fuhuhuhu. Esses Eventos são bem fascinantes.\n"
+       "Aderencia ao sistema pode ser bem arriscados nesse momento, tem certeza de que quer continuar?\n\n"
+    )
+    sys.exit(1) 
+# =========== COMPONENTES ==========
+try:
+    bot.run(BOT_COMPONENTS)
+except discord.LoggingComponents:
+    sys.syscomponents.write(
+        "\n[Homura] ...Hum, Interessante. Esses Componentes são bem práticos.\n"
+       "Adicionando novos componentes no sistema base (Linux)... Permaneça conectado durante a instalação para evitar   erros.\n\n" 
+    )
+    sys.exit(1)
+
+
+# =========== NEW DISCORD CONFIGURATIONS ===========
+@bot.command_prefix(bot_command="!", help_command="None")
+async def write(name="writeatopicaboutcybersecurity", help_command="Envia uma mensagem para outros membros"):
+    await ctx.reply("This is good for cybersecurity, my favorite part in it is defensive security/white hat hacking")
+
+# =========== NOVOS COMANDOS DE HOMURAAI ADICIONAIS =========== 
+@bot.command_prefix("send a message to OpenAI", help="Envia uma mensagem para o modelo da OpenAI")
+async def write(ctx, *, escreva: str):
+    await ctx.trigger_typing()
+    try:
+        resposta = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+        {"role": "system", "content": "Você é um Assistente para auxilio em desenvolvimento de sistemas para cibersegurança/jogos, consistente e preciso."},
+        {"role": "user", "content": pergunta}
+
+          ],
+          max_tokens=1000
+        )
+        texto_resposta = resposta[0].message.content.strip()
+        await ctx.reply(texto_resposta)
+    except Exception as e:
+        logger.error(f"Erro ao chamar OpenAI: {e}")
+        await ctx.reply("Houve um problema ao processar sua solicitação.")
