@@ -190,7 +190,7 @@ except discord.LoggingComponents:
 
 # =========== NEW DISCORD CONFIGURATIONS ===========
 @bot.command_prefix(bot_command="!", help_command="None")
-async def write(name="writeatopicaboutcybersecurity", help_command="Envia uma mensagem para outros membros"):
+async def write(name="writeatopicaboutcybersecurity1", help_command="Envia uma mensagem para outros membros"):
     await ctx.reply("This is good for cybersecurity, my favorite part in it is defensive security/white hat hacking")
 
 # =========== NOVOS COMANDOS DE HOMURAAI ADICIONAIS =========== 
@@ -206,6 +206,25 @@ async def write(ctx, *, escreva: str):
 
           ],
           max_tokens=1000
+        )
+        texto_resposta = resposta[0].message.content.strip()
+        await ctx.reply(texto_resposta)
+    except Exception as e:
+        logger.error(f"Erro ao chamar OpenAI: {e}")
+        await ctx.reply("Houve um problema ao processar sua solicitação.")
+
+# ======== OTHER CONFIGURATIONS FOR OPENAI ======== 
+@bot.command_prefix("Write a topic of cybersecurity/defensive security for the discord users/members", help="Escreve um tópico de cybersegurança/segurança defensiva para outros usuários/membros no discord")
+async def write(ctx, *, escreva: str):
+    await ctx.trigger_typing()
+    try:
+        resposta = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+        {"role": "system", "content": "Você é um Assistente para auxilio em programação de sistemas focados em cibersegurança, preciso e eficiente"},
+        {"role": "user", "content": pergunta}
+          ],
+          max_tokens=1500
         )
         texto_resposta = resposta[0].message.content.strip()
         await ctx.reply(texto_resposta)
